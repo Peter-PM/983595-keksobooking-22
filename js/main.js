@@ -1,4 +1,4 @@
-const randomNumber = function(min, max) {
+const getRandomNumber = function(min, max) {
   if (min < 0 || max < 0 || min == max) {
     throw new Error('Некорректное значение');
   }
@@ -10,9 +10,9 @@ const randomNumber = function(min, max) {
   return Math.floor(min + Math.random() * (max + 1 - min));
 }
 
-alert(randomNumber(110, 100));
+alert(getRandomNumber(110, 100));
 
-const RandomNumberPoint = function (min, max, point) {
+const getRandomNumberPoint = function (min, max, point) {
 
   if (min < 0 || max < 0 || min == max) {
     throw new Error('Некорректное значение');
@@ -22,8 +22,7 @@ const RandomNumberPoint = function (min, max, point) {
     [min, max] = [max, min]
   }
 
-  let number = min + Math.random() * (max - min);
-  return +number.toFixed(point)
+  return +(min + Math.random() * (max - min)).toFixed(point);
 }
 
-alert(RandomNumberPoint(1.2, 1.21, 2))
+alert(getRandomNumberPoint(1.2, 1.21, 2))
