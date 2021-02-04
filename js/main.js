@@ -1,40 +1,29 @@
-let randomNumber = getRandomNumber();
-
-function getRandomNumber(min = 0, max = 100) {
-  if (min == max) {
-    return alert('Интервал недопустимо мал!');
-  }
-
-  if (min < 0 || max < 0) {
-    return alert('Используйте положительные числа.');
+const randomNumber = function(min, max) {
+  if (min < 0 || max < 0 || min == max) {
+    throw new Error('Некорректное значение');
   }
 
   if (min > max) {
-    return Math.floor(max + Math.random() * (min + 1 - max));
+    [min, max] = [max, min]
   }
 
   return Math.floor(min + Math.random() * (max + 1 - min));
 }
 
-alert(randomNumber);
+alert(randomNumber(110, 100));
 
-function getRandomNumberPoint(min = 0, max = 100) {
+const RandomNumberPoint = function (min, max, point) {
 
-  if (min == max) {
-    return alert('Интервал недопустимо мал!');
-  }
-
-  if (min < 0 || max < 0) {
-    return alert('Используйте положительные числа.');
+  if (min < 0 || max < 0 || min == max) {
+    throw new Error('Некорректное значение');
   }
 
   if (min > max) {
-    let number = max + Math.random() * (min - max);
-    return +number.toFixed(4)
+    [min, max] = [max, min]
   }
 
   let number = min + Math.random() * (max - min);
-  return +number.toFixed(4)
+  return +number.toFixed(point)
 }
 
-alert(getRandomNumberPoint(1.2111, 1.2112))
+alert(RandomNumberPoint(1.2, 1.21, 2))
