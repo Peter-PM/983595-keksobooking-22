@@ -25,4 +25,78 @@ const getRandomNumberPoint = function (min, max, point) {
   return +(min + Math.random() * (max - min)).toFixed(point);
 }
 
-alert(getRandomNumberPoint(1.2, 1.21, 2))
+alert(getRandomNumberPoint(1.2, 1.21, 2));
+
+const OFFER = {
+  title: 'Best offer',
+  address: 'location.x, location.y',
+  type: [
+    'palace',
+    'flat',
+    'house',
+    'bungalow',
+  ],
+  checkin: [
+    '12:00',
+    '13:00',
+    '14:00',
+  ],
+  checkout: [
+    '12:00',
+    '13:00',
+    '14:00',
+  ],
+  features: [
+    'wifi',
+    'dishwasher',
+    'parking',
+    'washer',
+    'elevator',
+    'conditioner',
+  ],
+  description: 'Spacious accommodation in the best area!',
+  photos: [
+    'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
+    'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
+    'http://o0.github.io/assets/images/tokyo/hotel3.jpg',
+  ],
+};
+
+const getAnnouncement = function () {
+
+  return {
+    author : {
+      avatar : `img/avatars/user0${getRandomNumber(1, 8)}.png`,
+    },
+    offer : {
+      title : 'Best offer',
+      address : 'location.x, location.y',
+      price : getRandomNumber(1, 100),
+      type : OFFER.type[getRandomNumber(0, OFFER.type.length - 1)],
+      rooms : getRandomNumber(1, 100),
+      guests : getRandomNumber(1, 100),
+      checkin : OFFER.checkin[getRandomNumber(0, OFFER.checkin.length - 1)],
+      checkout : OFFER.checkout[getRandomNumber(0, OFFER.checkout.length - 1)],
+      features : [
+        'wifi',
+        'dishwasher',
+        'parking',
+        'washer',
+        'elevator',
+        'conditioner',
+      ],
+      description : 'Spacious accommodation in the best area!',
+      photos : [
+        'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
+        'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
+        'http://o0.github.io/assets/images/tokyo/hotel3.jpg',
+      ],
+    },
+    location : {
+      x : getRandomNumberPoint(35.65000, 35.70000, 5),
+      y : getRandomNumberPoint(139.70000, 139.80000, 5),
+    },
+  }
+};
+
+alert(getAnnouncement());
