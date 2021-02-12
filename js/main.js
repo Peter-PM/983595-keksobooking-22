@@ -90,8 +90,6 @@ const getAnnouncement = function () {
   }
 };
 
-alert(getAnnouncement());
-
 const allOffers = new Array(10).fill().map(getAnnouncement);
 
 alert(allOffers);
