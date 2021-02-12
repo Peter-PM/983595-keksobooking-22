@@ -10,8 +10,6 @@ const getRandomNumber = function(min, max) {
   return Math.floor(min + Math.random() * (max + 1 - min));
 }
 
-alert(getRandomNumber(110, 100));
-
 const getRandomNumberPoint = function (min, max, point) {
 
   if (min < 0 || max < 0 || min == max) {
@@ -25,9 +23,12 @@ const getRandomNumberPoint = function (min, max, point) {
   return +(min + Math.random() * (max - min)).toFixed(point);
 }
 
-alert(getRandomNumberPoint(1.2, 1.21, 2))
 
 const OFFER = {
+  avatar: {
+    min: 1,
+    max: 8,
+  },
   title: [
     'Best offer',
     'Cool apartment',
@@ -42,6 +43,18 @@ const OFFER = {
     'house',
     'bungalow',
   ],
+  price: {
+    min: 1000,
+    max: 5000,
+  },
+  rooms: {
+    min: 1,
+    max: 10,
+  },
+  guests: {
+    min: 1,
+    max: 10,
+  },
   checkin: [
     '12:00',
     '13:00',
@@ -72,27 +85,35 @@ const OFFER = {
     'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
     'http://o0.github.io/assets/images/tokyo/hotel3.jpg',
   ],
+  location: {
+    xMin: 35.65000,
+    xMax: 35.70000,
+    yMin: 139.70000,
+    yMax: 139.80000,
+    point: 5,
+  },
 };
 
 const getAnnouncement = function () {
-  let locationX = getRandomNumberPoint(35.65000, 35.70000, 5);
-  let locationY = getRandomNumberPoint(139.70000, 139.80000, 5);
+
+  const locationX = getRandomNumberPoint(OFFER.location.xMin, OFFER.location.xMax, OFFER.location.point);
+  const locationY = getRandomNumberPoint(OFFER.location.yMin, OFFER.location.yMax, OFFER.location.point);
 
   return {
     author : {
-      avatar : `img/avatars/user0${getRandomNumber(1, 8)}.png`,
+      avatar : `img/avatars/user0${getRandomNumber(OFFER.avatar.min, OFFER.avatar.max)}.png`,
     },
     offer : {
       title : OFFER.title[getRandomNumber(0, OFFER.title.length - 1)],
-      address : 'location.' + locationX + ', location.' + locationY,
-      price : getRandomNumber(1, 100),
+      address : locationX + ', ' + locationY,
+      price : getRandomNumber(OFFER.price.min, OFFER.price.max),
       type : OFFER.type[getRandomNumber(0, OFFER.type.length - 1)],
-      rooms : getRandomNumber(1, 100),
-      guests : getRandomNumber(1, 100),
+      rooms : getRandomNumber(OFFER.rooms.min, OFFER.rooms.max),
+      guests : getRandomNumber(OFFER.guests.min, OFFER.guests.max),
       checkin : OFFER.checkin[getRandomNumber(0, OFFER.checkin.length - 1)],
       checkout : OFFER.checkout[getRandomNumber(0, OFFER.checkout.length - 1)],
       features : OFFER.features.slice(0, getRandomNumber(0, OFFER.features.length - 1)),
-      description : OFFER.description[0, getRandomNumber(0, OFFER.description.length - 1)],
+      description : OFFER.description[getRandomNumber(0, OFFER.description.length - 1)],
       photos : OFFER.photos.slice(0, getRandomNumber(0, OFFER.photos.length - 1)),
     },
     location : {
