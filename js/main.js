@@ -28,7 +28,13 @@ const getRandomNumberPoint = function (min, max, point) {
 alert(getRandomNumberPoint(1.2, 1.21, 2))
 
 const OFFER = {
-  title: 'Best offer',
+  title: [
+    'Best offer',
+    'Cool apartment',
+    'Mega house',
+    'Super villa',
+    'Party room',
+  ],
   address: 'location.x, location.y',
   type: [
     'palace',
@@ -54,7 +60,13 @@ const OFFER = {
     'elevator',
     'conditioner',
   ],
-  description: 'Spacious accommodation in the best area!',
+  description: [
+    'Spacious accommodation in the best area!',
+    'You will not regret coming!',
+    'Cozy nest for lovers.',
+    'The best apartment which you saw!',
+    'Yo bro this hut is for you!',
+  ],
   photos: [
     'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
     'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
@@ -71,7 +83,7 @@ const getAnnouncement = function () {
       avatar : `img/avatars/user0${getRandomNumber(1, 8)}.png`,
     },
     offer : {
-      title : 'Best offer',
+      title : OFFER.title[getRandomNumber(0, OFFER.title.length - 1)],
       address : 'location.' + locationX + ', location.' + locationY,
       price : getRandomNumber(1, 100),
       type : OFFER.type[getRandomNumber(0, OFFER.type.length - 1)],
@@ -80,7 +92,7 @@ const getAnnouncement = function () {
       checkin : OFFER.checkin[getRandomNumber(0, OFFER.checkin.length - 1)],
       checkout : OFFER.checkout[getRandomNumber(0, OFFER.checkout.length - 1)],
       features : OFFER.features.slice(0, getRandomNumber(0, OFFER.features.length - 1)),
-      description : 'Spacious accommodation in the best area!',
+      description : OFFER.description[0, getRandomNumber(0, OFFER.description.length - 1)],
       photos : OFFER.photos.slice(0, getRandomNumber(0, OFFER.photos.length - 1)),
     },
     location : {
