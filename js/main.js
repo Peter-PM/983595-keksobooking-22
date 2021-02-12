@@ -63,6 +63,8 @@ const OFFER = {
 };
 
 const getAnnouncement = function () {
+  let locationX = getRandomNumberPoint(35.65000, 35.70000, 5);
+  let locationY = getRandomNumberPoint(139.70000, 139.80000, 5);
 
   return {
     author : {
@@ -70,33 +72,26 @@ const getAnnouncement = function () {
     },
     offer : {
       title : 'Best offer',
-      address : 'location.x, location.y',
+      address : 'location.' + locationX + ', location.' + locationY,
       price : getRandomNumber(1, 100),
       type : OFFER.type[getRandomNumber(0, OFFER.type.length - 1)],
       rooms : getRandomNumber(1, 100),
       guests : getRandomNumber(1, 100),
       checkin : OFFER.checkin[getRandomNumber(0, OFFER.checkin.length - 1)],
       checkout : OFFER.checkout[getRandomNumber(0, OFFER.checkout.length - 1)],
-      features : [
-        'wifi',
-        'dishwasher',
-        'parking',
-        'washer',
-        'elevator',
-        'conditioner',
-      ],
+      features : OFFER.features.slice(0, getRandomNumber(0, OFFER.features.length - 1)),
       description : 'Spacious accommodation in the best area!',
-      photos : [
-        'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
-        'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
-        'http://o0.github.io/assets/images/tokyo/hotel3.jpg',
-      ],
+      photos : OFFER.photos.slice(0, getRandomNumber(0, OFFER.photos.length - 1)),
     },
     location : {
-      x : getRandomNumberPoint(35.65000, 35.70000, 5),
-      y : getRandomNumberPoint(139.70000, 139.80000, 5),
+      x : locationX,
+      y : locationY,
     },
   }
 };
 
 alert(getAnnouncement());
+
+const allOffers = new Array(10).fill().map(getAnnouncement);
+
+alert(allOffers);
