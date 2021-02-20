@@ -5,8 +5,6 @@ const priceHousing = document.querySelector('#price');
 const timeIn = document.querySelector('#timein');
 const timeOut = document.querySelector('#timeout');
 
-console.log(timeIn, timeOut)
-
 const housingPrice = {
   bungalow: 0,
   flat: 1000,
@@ -20,7 +18,6 @@ typeHousing.addEventListener('change', () => {
   let type = typeHousing.value;
   priceHousing.placeholder = housingPrice[type];
   priceHousing.min = housingPrice[type];
-  console.log(priceHousing);
 })
 
 timeIn.addEventListener('change', () => {
