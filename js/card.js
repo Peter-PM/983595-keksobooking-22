@@ -62,7 +62,9 @@ const guestsDeclinations = (guests) => {
 const createCard = (item) => {
 
   const cloneTemplate = element.cloneNode(true);
-  cloneTemplate.querySelector('.popup__avatar').src = item.author.avatar;
+  const popupAvatar = cloneTemplate.querySelector('.popup__avatar');
+
+  popupAvatar.src = item.author.avatar;
   cloneTemplate.querySelector('.popup__title').textContent = item.offer.title;
   cloneTemplate.querySelector('.popup__text--address').textContent = item.offer.address;
   cloneTemplate.querySelector('.popup__text--price').textContent = item.offer.price + ' ₽/ночь';
@@ -73,7 +75,6 @@ const createCard = (item) => {
   createFeatures(cloneTemplate.querySelector('.popup__features'), item.offer.features);
   createFhotos(cloneTemplate.querySelector('.popup__photos'), item.offer.photos);
   mapCanvas.appendChild(cloneTemplate);
-
 };
 
 export {createCard};
