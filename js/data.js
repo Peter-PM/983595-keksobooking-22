@@ -88,9 +88,9 @@ const getAnnouncement = function () {
       guests : getRandomNumber(OFFER.guests.min, OFFER.guests.max),
       checkin : OFFER.checkin[getRandomNumber(0, OFFER.checkin.length - 1)],
       checkout : OFFER.checkout[getRandomNumber(0, OFFER.checkout.length - 1)],
-      features : OFFER.features.slice(0, getRandomNumber(0, OFFER.features.length - 1)),
+      features : OFFER.features.slice(0, getRandomNumber(1, OFFER.features.length)),
       description : OFFER.description[getRandomNumber(0, OFFER.description.length - 1)],
-      photos : OFFER.photos.slice(0, getRandomNumber(0, OFFER.photos.length - 1)),
+      photos : OFFER.photos.slice(0, getRandomNumber(1, OFFER.photos.length)),
     },
     location : {
       x : locationX,
@@ -101,4 +101,4 @@ const getAnnouncement = function () {
 
 const allOffers = new Array(10).fill().map(getAnnouncement);
 
-export {allOffers, getAnnouncement};
+export {allOffers};

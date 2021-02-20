@@ -1,4 +1,7 @@
 import { allOffers } from './data.js';
-import './new-elements.js';
+import {createCard} from './card.js';
 
-alert(allOffers);
+
+//alert(allOffers);
+
+createCard(allOffers[0]);
