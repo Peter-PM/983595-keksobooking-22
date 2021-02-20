@@ -4,13 +4,6 @@ const mapCanvas = document.querySelector('#map-canvas');
 
 element.style.margin = '50px auto'
 
-const housingType = {
-  flat: 'Квартира',
-  bungalow: 'Бунгало',
-  house: 'Дом',
-  palace: 'Доврец',
-};
-
 const createFeatures = (list, features) => {
   list.innerHTML = '';
   for (let i = 0; i < features.length; i++) {
@@ -59,21 +52,39 @@ const guestsDeclinations = (guests) => {
   return guests
 };
 
+const housingType = {
+  flat: 'Квартира',
+  bungalow: 'Бунгало',
+  house: 'Дом',
+  palace: 'Доврец',
+};
+
 const createCard = (item) => {
 
   const cloneTemplate = element.cloneNode(true);
   const popupAvatar = cloneTemplate.querySelector('.popup__avatar');
+  const popupTitle = cloneTemplate.querySelector('.popup__title');
+  const popupAdress = cloneTemplate.querySelector('.popup__text--address');
+  const popupPrice = cloneTemplate.querySelector('.popup__text--price');
+  const popupType = cloneTemplate.querySelector('.popup__type');
+  const popupCapacity = cloneTemplate.querySelector('.popup__text--capacity');
+  const popupTime = cloneTemplate.querySelector('.popup__text--time');
+  const popupDescription = cloneTemplate.querySelector('.popup__description');
+  const popupFeatures = cloneTemplate.querySelector('.popup__features');
+  const popupPhotos = cloneTemplate.querySelector('.popup__photos');
+
 
   popupAvatar.src = item.author.avatar;
-  cloneTemplate.querySelector('.popup__title').textContent = item.offer.title;
-  cloneTemplate.querySelector('.popup__text--address').textContent = item.offer.address;
-  cloneTemplate.querySelector('.popup__text--price').textContent = item.offer.price + ' ₽/ночь';
-  cloneTemplate.querySelector('.popup__type').textContent = housingType[item.offer.type];
-  cloneTemplate.querySelector('.popup__text--capacity').textContent = `${roomsDeclinations(item.offer.rooms)} для ${guestsDeclinations(item.offer.guests)}`;
-  cloneTemplate.querySelector('.popup__text--time').textContent = `Заезд после ${item.offer.checkin} выезд до ${item.offer.checkout}`;
-  cloneTemplate.querySelector('.popup__description').textContent = item.offer.description;
-  createFeatures(cloneTemplate.querySelector('.popup__features'), item.offer.features);
-  createFhotos(cloneTemplate.querySelector('.popup__photos'), item.offer.photos);
+  popupTitle.textContent = item.offer.title;
+  popupAdress.textContent = item.offer.address;
+  popupPrice.textContent = item.offer.price + ' ₽/ночь';
+  popupType.textContent = housingType[item.offer.type];
+  popupCapacity.textContent = `${roomsDeclinations(item.offer.rooms)} для ${guestsDeclinations(item.offer.guests)}`;
+  popupTime.textContent = `Заезд после ${item.offer.checkin} выезд до ${item.offer.checkout}`;
+  popupDescription.textContent = item.offer.description;
+  createFeatures(popupFeatures, item.offer.features);
+  createFhotos(popupPhotos, item.offer.photos);
+
   mapCanvas.appendChild(cloneTemplate);
 };
 
