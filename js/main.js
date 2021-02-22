@@ -1,6 +1,6 @@
-import { allOffers } from './data.js';
-import { createCard } from './card.js';
+// import { allOffers } from './data.js';
+// import { createCard } from './card.js';
 import  './form.js';
+import  './map.js';
 
-
-createCard(allOffers[0]);
+// console.log(createCard(allOffers));
