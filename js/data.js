@@ -102,3 +102,4 @@ const getAnnouncement = function () {
 const allOffers = new Array(10).fill().map(getAnnouncement);
 
 export {allOffers};
+export{OFFER};

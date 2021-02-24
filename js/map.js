@@ -4,12 +4,14 @@ import { activeForm } from './form.js';
 
 
 const L = window.L;
+const tokioCenterLat = 35.68950;
+const tokioCenterLng = 139.69171;
 
 const map = L.map('map-canvas').on('load', () => {
   activeForm();
 }).setView({
-  lat: 35.6895000,
-  lng: 139.6917100,
+  lat: tokioCenterLat,
+  lng: tokioCenterLng,
 }, 12);
 
 L.tileLayer(
@@ -33,8 +35,8 @@ const secondPinIcon = L.icon({
 
 const mainMarker = L.marker(
   {
-    lat: 35.68950,
-    lng: 139.69171,
+    lat: tokioCenterLat,
+    lng: tokioCenterLng,
   },
   {
     draggable: true,
@@ -57,10 +59,13 @@ for (let oneOffer of allOffers) {
 
 mainMarker.addTo(map);
 
+const locationPoint = mainMarker.getLatLng();
+const DOTSAFTERZERO = 5;
+
 const address = document.querySelector('#address');
-address.value = `${mainMarker._latlng.lat}, ${mainMarker._latlng.lng}`
+address.value = `${locationPoint.lat}, ${locationPoint.lng}`
 
 mainMarker.on('move', (evt) => {
-  address.value = `${evt.target.getLatLng().lat.toFixed(5)}, ${evt.target.getLatLng().lng.toFixed(5)}`;
+  address.value = `${evt.target.getLatLng().lat.toFixed(DOTSAFTERZERO)}, ${evt.target.getLatLng().lng.toFixed(DOTSAFTERZERO)}`;
 });
 //mainMarker.remove();
