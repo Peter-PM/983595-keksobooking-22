@@ -1,6 +1,5 @@
 
 const element = document.querySelector('#card').content.querySelector('.popup');
-const mapCanvas = document.querySelector('#map-canvas');
 
 element.style.margin = '50px auto'
 
@@ -85,7 +84,8 @@ const createCard = (item) => {
   createFeatures(popupFeatures, item.offer.features);
   createFhotos(popupPhotos, item.offer.photos);
 
-  mapCanvas.appendChild(cloneTemplate);
+  return cloneTemplate
+
 };
 
 export {createCard};
