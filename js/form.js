@@ -16,7 +16,7 @@ priceHousing.placeholder = housingPrice[typeHousing.value];
 
 typeHousing.addEventListener('change', () => {
   let type = typeHousing.value;
-  priceHousing.placeholder = housingPrice[type];
+  //priceHousing.placeholder = housingPrice[type];
   priceHousing.min = housingPrice[type];
 })
 
@@ -58,3 +58,61 @@ const activeForm = () => {
 }
 
 export {activeForm};
+
+
+//Отправка данных
+const main = document.querySelector('main');
+const successMessage = document.querySelector('#success').content.querySelector('.success');
+const errorMessage = document.querySelector('#error').content.querySelector('.error');
+//const errorButton = errorMessage.querySelector('button');
+
+successMessage.addEventListener('click', () => {
+  main.removeChild(successMessage);
+});
+
+window.addEventListener('keydown', (evt) => {
+  if (evt.keyCode === 27) {
+    evt.preventDefault();
+    main.removeChild(successMessage);
+  }
+})
+
+// errorButton.addEventListener('click', () => {
+//   main.removeChild(errorMessage);
+// });
+
+errorMessage.addEventListener('click', () => {
+  main.removeChild(errorMessage);
+});
+
+window.addEventListener('keydown', (evt) => {
+  if (evt.keyCode === 27) {
+    evt.preventDefault();
+    main.removeChild(errorMessage);
+  }
+})
+
+mainForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+
+  const formData = new FormData(evt.target);
+
+  fetch(
+    'https://22.javascript.pages.academy/keksobooking',
+    {
+      method: 'POST',
+      body: formData,
+    },
+  ).then((response) => {
+    if (response.ok) {
+      successMessage.style = 'z-index: 100';
+      main.appendChild(successMessage);
+      mainForm.reset();
+    } else {
+      errorMessage.style = 'z-index: 100';
+      main.appendChild(errorMessage)
+    }
+  });
+});
+
+export {mainForm}
