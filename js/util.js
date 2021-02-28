@@ -23,4 +23,9 @@ const getRandomNumberPoint = function (min, max, point) {
   return +(min + Math.random() * (max - min)).toFixed(point);
 }
 
-export {getRandomNumber, getRandomNumberPoint};
+const isEscEvent = (evt) => {
+  return evt.key === ('Escape' || 'Esc');
+};
+
+export {getRandomNumber, getRandomNumberPoint, isEscEvent};
+

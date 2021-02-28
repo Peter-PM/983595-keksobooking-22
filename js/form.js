@@ -1,3 +1,4 @@
+import { resetMainMarker } from './map.js';
 
 const typeHousing = document.querySelector('#type');
 const priceHousing = document.querySelector('#price');
@@ -56,63 +57,34 @@ const activeForm = () => {
   selects.forEach(removeDisabled);
   fieldsets.forEach(removeDisabled);
 }
-
-export {activeForm};
-
+activeForm();
 
 //Отправка данных
-const main = document.querySelector('main');
-const successMessage = document.querySelector('#success').content.querySelector('.success');
-const errorMessage = document.querySelector('#error').content.querySelector('.error');
-//const errorButton = errorMessage.querySelector('button');
 
-successMessage.addEventListener('click', () => {
-  main.removeChild(successMessage);
-});
+// mainForm.addEventListener('submit', (evt) => {
+//   evt.preventDefault();
 
-window.addEventListener('keydown', (evt) => {
-  if (evt.keyCode === 27) {
-    evt.preventDefault();
-    main.removeChild(successMessage);
-  }
-})
-
-// errorButton.addEventListener('click', () => {
-//   main.removeChild(errorMessage);
+//   fetch(
+//     'https://22.javascript.pages.academy/keksobooking',
+//     {
+//       method: 'POST',
+//       body: new FormData(evt.target),
+//     })
+//     .then((response) => {
+//       console.log(response)
+//     })
+//     .catch((err) => {
+//       alert(err)
+//     })
+//   mainForm.reset();
 // });
 
-errorMessage.addEventListener('click', () => {
-  main.removeChild(errorMessage);
-});
-
-window.addEventListener('keydown', (evt) => {
-  if (evt.keyCode === 27) {
-    evt.preventDefault();
-    main.removeChild(errorMessage);
-  }
-})
-
-mainForm.addEventListener('submit', (evt) => {
+mainForm.querySelector('.ad-form__reset').addEventListener('click', (evt) => {
   evt.preventDefault();
-
-  const formData = new FormData(evt.target);
-
-  fetch(
-    'https://22.javascript.pages.academy/keksobooking',
-    {
-      method: 'POST',
-      body: formData,
-    },
-  ).then((response) => {
-    if (response.ok) {
-      successMessage.style = 'z-index: 100';
-      main.appendChild(successMessage);
-      mainForm.reset();
-    } else {
-      errorMessage.style = 'z-index: 100';
-      main.appendChild(errorMessage)
-    }
-  });
+  mainForm.reset();
+  resetMainMarker();
 });
 
-export {mainForm}
+export {activeForm, mainForm};
+
+

@@ -1,18 +1,21 @@
-import { mainForm } from './form.js';
 import { createCard } from './card.js';
-import { activeForm } from './form.js';
+//import { activeForm } from './form.js';
 
 
 const L = window.L;
 const TOKIO_CENTER_LAT = 35.68950;
 const TOKIO_CENTER_LNG = 139.69171;
+const MAP_SIZE = 10;
 
-const map = L.map('map-canvas').on('load', () => {
-  activeForm();
-}).setView({
-  lat: TOKIO_CENTER_LAT,
-  lng: TOKIO_CENTER_LNG,
-}, 10);
+const map = L.map('map-canvas')
+// .on('load', () => {
+//   activeForm();
+// })
+  .setView({
+    lat: TOKIO_CENTER_LAT,
+    lng: TOKIO_CENTER_LNG,
+  }, MAP_SIZE)
+;
 
 L.tileLayer(
   'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
@@ -49,7 +52,7 @@ const mainMarker = L.marker(
   },
 );
 
-const bindPopupMarkers = (allOffers) => {
+const fillingPopupMarkers = (allOffers) => {
   for (let oneOffer of allOffers) {
     const secondMarker = L.marker(
       {
@@ -79,9 +82,20 @@ mainMarker.on('move', (evt) => {
 });
 //mainMarker.remove();
 
-mainForm.addEventListener('reset', () => {
-  mainMarker.remove();
-  mainMarker.addTo(map); //не работает
-});
+const resetMainMarker = () => {
+  map.setView(
+    {
+      lat: TOKIO_CENTER_LAT,
+      lng: TOKIO_CENTER_LNG,
+    },
+    MAP_SIZE);
+  mainMarker.setLatLng(
+    {
+      lat: TOKIO_CENTER_LAT,
+      lng: TOKIO_CENTER_LNG,
+    },
+  );
+  address.value = `${TOKIO_CENTER_LAT}, ${TOKIO_CENTER_LNG}`
+};
 
-export {bindPopupMarkers}
+export {fillingPopupMarkers, resetMainMarker};
