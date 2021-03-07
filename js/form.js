@@ -1,4 +1,6 @@
 import { resetMainMarker } from './map.js';
+import { postData } from './api.js';
+import { showPopupError, showPopupSuccess } from './popup.js';
 
 const typeHousing = document.querySelector('#type');
 const priceHousing = document.querySelector('#price');
@@ -17,7 +19,6 @@ priceHousing.placeholder = housingPrice[typeHousing.value];
 
 typeHousing.addEventListener('change', () => {
   let type = typeHousing.value;
-  //priceHousing.placeholder = housingPrice[type];
   priceHousing.min = housingPrice[type];
 })
 
@@ -60,24 +61,11 @@ const activeForm = () => {
 activeForm();
 
 //Отправка данных
+mainForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
 
-// mainForm.addEventListener('submit', (evt) => {
-//   evt.preventDefault();
-
-//   fetch(
-//     'https://22.javascript.pages.academy/keksobooking',
-//     {
-//       method: 'POST',
-//       body: new FormData(evt.target),
-//     })
-//     .then((response) => {
-//       console.log(response)
-//     })
-//     .catch((err) => {
-//       alert(err)
-//     })
-//   mainForm.reset();
-// });
+  postData(showPopupSuccess, showPopupError, mainForm)
+});
 
 mainForm.querySelector('.ad-form__reset').addEventListener('click', (evt) => {
   evt.preventDefault();

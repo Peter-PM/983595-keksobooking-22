@@ -8,50 +8,69 @@ const main = document.querySelector('main');
 const successMessage = document.querySelector('#success').content.querySelector('.success');
 const errorMessage = document.querySelector('#error').content.querySelector('.error');
 
+
 //const errorButton = errorMessage.querySelector('button');
 // errorButton.addEventListener('click', () => {
 //   main.removeChild(errorMessage);
 // });
 
-successMessage.addEventListener('click', () => {
-  main.removeChild(successMessage);
-  document.removeEventListener('keydown', onEscPopupSuccess);
-});
-
-
-errorMessage.addEventListener('click', () => {
-  main.removeChild(errorMessage);
-  document.removeEventListener('keydown', onEscPopupError);
-});
-
-const onEscPopupSuccess = (evt) => {
-  if (isEscEvent(evt)) {
-    evt.preventDefault();
-    main.removeChild(successMessage);
-    document.removeEventListener('keydown', onEscPopupSuccess);
-  }
+const removeChildListener = (message, escFoo) => {
+  main.removeChild(message);
+  document.removeEventListener('keydown', escFoo);
 }
 
+//Обработка ошибки
 const onEscPopupError = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
-    main.removeChild(errorMessage);
-    document.removeEventListener('keydown', onEscPopupError);
+    removeChildListener(errorMessage, onEscPopupError);
   }
 }
+//Удаление кликера
+const delClickerError = () => {
+  removeChildListener(errorMessage, onEscPopupError);
+  errorMessage.removeEventListener('click', delClickerError);
+}
 
-const popupShow = (resp) => {
-  if (resp.ok) {
-    main.appendChild(successMessage);
-    document.addEventListener('keydown', onEscPopupSuccess);
-    mainForm.reset();
+//Создание попапа ошибки формы
+const showPopupError = () => {
+  document.addEventListener('keydown', onEscPopupError);
+  errorMessage.querySelector('.error__message').textContent = 'Ошибка размещения объявления';
+  main.appendChild(errorMessage);
 
-    resetMainMarker();
-  } else {
-    main.appendChild(errorMessage);
+  errorMessage.addEventListener('click', delClickerError);
+}
 
-    document.addEventListener('keydown', onEscPopupError)
+//Обработка успешной отправки формы
+const onEscPopupSuccess = (evt) => {
+  if (isEscEvent(evt)) {
+    evt.preventDefault();
+    removeChildListener(successMessage, onEscPopupSuccess);
   }
-};
+}
+//Удаление кликера
+const delClickerSuccess = () => {
+  removeChildListener(successMessage, onEscPopupSuccess);
+  successMessage.removeEventListener('click', delClickerSuccess);
+}
 
-export {popupShow};
+//Создание попапа успешной отправки формы
+const showPopupSuccess = () => {
+
+  main.appendChild(successMessage);
+  document.addEventListener('keydown', onEscPopupSuccess);
+
+  successMessage.addEventListener('click', delClickerSuccess);
+
+  mainForm.reset();
+
+  resetMainMarker();
+}
+
+//Ошибка загрузки карты
+const showMapError = () => {
+  showPopupError();
+  errorMessage.querySelector('.error__message').textContent = 'Карта не загрузилась';
+}
+
+export {showPopupError, showPopupSuccess, showMapError};

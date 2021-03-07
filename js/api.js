@@ -1,30 +1,35 @@
-import { fillingPopupMarkers } from './map.js';
-import { mainForm } from './form.js';
-import { popupShow } from './popup.js';
 
-fetch('https://22.javascript.pages.academy/keksobooking/data')
-  .then((response) => response.json())
-  .then((array) => {
-    fillingPopupMarkers(array)
+const END_POINT = 'https://22.javascript.pages.academy/keksobooking';
+const Method = {
+  GET: 'GET',
+  POST: 'POST',
+}
+
+const load = ({url, method = Method.GET, headers = new Headers(), body = null }) => {
+  return fetch(`${END_POINT}${url}`, {
+    method,
+    headers,
+    body,
   })
-  .catch((err) => {
-    alert(err);
-  })
-;
-
-mainForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-
-  fetch(
-    'https://22.javascript.pages.academy/keksobooking',
-    {
-      method: 'POST',
-      body: new FormData(evt.target),
-    })
     .then((response) => {
-      popupShow(response)
-    })
-    .catch((err) => {
-      alert(err)
-    })
-});
+      if (response.ok) {
+        return response.json();
+      }
+      throw new Error(`${response.status}: ${response.statusText}`);
+    });
+}
+
+const getData = (onSuccess, onError) => {
+  return load({url: '/data'})
+    .then(onSuccess)
+    .catch(onError)
+}
+
+
+const postData = (onSuccess, onError, form) => {
+  return load({url: '', method: Method.POST, body: new FormData(form)})
+    .then(onSuccess)
+    .catch(onError)
+};
+
+export {getData, postData};
