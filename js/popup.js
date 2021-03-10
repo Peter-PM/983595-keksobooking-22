@@ -60,9 +60,9 @@ const onPopupSuccessClick = () => {
 }
 
 //Ошибка загрузки карты
-const showMapError = () => {
+const showMapErrorPopup = () => {
   onPopupErrorShow();
   errorMessage.querySelector('.error__message').textContent = 'Объявления не загрузились';
 }
 
-export {onPopupErrorShow, onPopupSuccessShow, showMapError};
+export {onPopupErrorShow, onPopupSuccessShow, showMapErrorPopup};

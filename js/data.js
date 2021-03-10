@@ -1,6 +1,6 @@
-import {getData} from './api.js';
-import {fillingPopupMarkers} from './map.js';
-import {showMapError} from './popup.js';
+import { getData } from './api.js';
+import { fillingPopupMarkers } from './map.js';
+import { showMapErrorPopup } from './popup.js';
 
 
-getData(fillingPopupMarkers, showMapError);
+getData(fillingPopupMarkers, showMapErrorPopup);
