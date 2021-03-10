@@ -1,7 +1,4 @@
-
 const element = document.querySelector('#card').content.querySelector('.popup');
-
-element.style.margin = '50px auto'
 
 const createFeatures = (list, features) => {
   list.innerHTML = '';

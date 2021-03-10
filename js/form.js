@@ -1,3 +1,8 @@
+import { resetMainMarker } from './map.js';
+import { postData } from './api.js';
+import { onPopupErrorShow, onPopupSuccessShow } from './popup.js';
+
+const mainForm = document.querySelector('.ad-form');
 
 const typeHousing = document.querySelector('#type');
 const priceHousing = document.querySelector('#price');
@@ -30,31 +35,20 @@ timeOut.addEventListener('change', () => {
   timeIn.value = type;
 })
 
-//Активация и деактивация формы
-const mapFiltersForm = document.querySelector('.map__filters');
-const mainForm = document.querySelector('.ad-form');
-const selects = mapFiltersForm.querySelectorAll('select');
-const fieldsets = document.querySelectorAll('fieldset');
+//Отправка данных
+mainForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
 
-mapFiltersForm.classList.add('ad-form--disabled');
-mainForm.classList.add('ad-form--disabled');
+  postData(onPopupSuccessShow, onPopupErrorShow, new FormData(evt.target));
 
-const addDisabled = (element) => {
-  element.disabled = true;
-};
+  mainForm.reset();
+  resetMainMarker();
+});
 
-const removeDisabled = (element) => {
-  element.disabled = false;
-};
+mainForm.querySelector('.ad-form__reset').addEventListener('click', (evt) => {
+  evt.preventDefault();
+  mainForm.reset();
+  resetMainMarker();
+});
 
-selects.forEach(addDisabled);
-fieldsets.forEach(addDisabled);
-
-const activeForm = () => {
-  mapFiltersForm.classList.remove('ad-form--disabled');
-  mainForm.classList.remove('ad-form--disabled');
-  selects.forEach(removeDisabled);
-  fieldsets.forEach(removeDisabled);
-}
-
-export {activeForm};
+export {mainForm};
