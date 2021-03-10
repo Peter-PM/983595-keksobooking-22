@@ -1,5 +1,5 @@
-import { resetMainMarker } from './map.js';
-import { mainForm } from './form.js';
+// import { resetMainMarker } from './map.js';
+// import { mainForm } from './form.js';
 import { isEscEvent } from './util.js';
 
 
@@ -8,69 +8,61 @@ const main = document.querySelector('main');
 const successMessage = document.querySelector('#success').content.querySelector('.success');
 const errorMessage = document.querySelector('#error').content.querySelector('.error');
 
-
 //const errorButton = errorMessage.querySelector('button');
 // errorButton.addEventListener('click', () => {
 //   main.removeChild(errorMessage);
 // });
 
-const removeChildListener = (message, escFoo) => {
-  main.removeChild(message);
+const closePopup = (message, escFoo) => {
+  message.remove();
   document.removeEventListener('keydown', escFoo);
 }
 
-//Обработка ошибки
-const onEscPopupError = (evt) => {
-  if (isEscEvent(evt)) {
-    evt.preventDefault();
-    removeChildListener(errorMessage, onEscPopupError);
-  }
-}
-//Удаление кликера
-const delClickerError = () => {
-  removeChildListener(errorMessage, onEscPopupError);
-  errorMessage.removeEventListener('click', delClickerError);
-}
-
 //Создание попапа ошибки формы
-const showPopupError = () => {
-  document.addEventListener('keydown', onEscPopupError);
+const onPopupErrorShow = () => {
+  document.addEventListener('keydown', onPopupErrorEsc);
   errorMessage.querySelector('.error__message').textContent = 'Ошибка размещения объявления';
+  errorMessage.addEventListener('click', onPopupErrorClick);
   main.appendChild(errorMessage);
-
-  errorMessage.addEventListener('click', delClickerError);
 }
-
-//Обработка успешной отправки формы
-const onEscPopupSuccess = (evt) => {
+//Обработка ESC на попапе ошибки
+const onPopupErrorEsc = (evt) => {
   if (isEscEvent(evt)) {
     evt.preventDefault();
-    removeChildListener(successMessage, onEscPopupSuccess);
+    closePopup(errorMessage, onPopupErrorEsc);
   }
 }
 //Удаление кликера
-const delClickerSuccess = () => {
-  removeChildListener(successMessage, onEscPopupSuccess);
-  successMessage.removeEventListener('click', delClickerSuccess);
+const onPopupErrorClick = () => {
+  closePopup(errorMessage, onPopupErrorEsc);
+  errorMessage.removeEventListener('click', onPopupErrorClick);
 }
 
 //Создание попапа успешной отправки формы
-const showPopupSuccess = () => {
-
+const onPopupSuccessShow = () => {
+  document.addEventListener('keydown', onPopupSuccessEsc);
+  successMessage.addEventListener('click', onPopupSuccessClick);
   main.appendChild(successMessage);
-  document.addEventListener('keydown', onEscPopupSuccess);
-
-  successMessage.addEventListener('click', delClickerSuccess);
-
-  mainForm.reset();
-
-  resetMainMarker();
+  // mainForm.reset();
+  // resetMainMarker();
+}
+//Обработка ESC на попапе успешной отправки формы
+const onPopupSuccessEsc = (evt) => {
+  if (isEscEvent(evt)) {
+    evt.preventDefault();
+    closePopup(successMessage, onPopupSuccessEsc);
+  }
+}
+//Удаление кликера
+const onPopupSuccessClick = () => {
+  closePopup(successMessage, onPopupSuccessEsc);
+  successMessage.removeEventListener('click', onPopupSuccessClick);
 }
 
 //Ошибка загрузки карты
 const showMapError = () => {
-  showPopupError();
-  errorMessage.querySelector('.error__message').textContent = 'Карта не загрузилась';
+  onPopupErrorShow();
+  errorMessage.querySelector('.error__message').textContent = 'Объявления не загрузились';
 }
 
-export {showPopupError, showPopupSuccess, showMapError};
+export {onPopupErrorShow, onPopupSuccessShow, showMapError};

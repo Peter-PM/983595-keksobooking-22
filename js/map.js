@@ -1,5 +1,5 @@
 import { createCard } from './card.js';
-//import { activeForm } from './form.js';
+import { activeForm } from './form-activation.js';
 
 
 const L = window.L;
@@ -8,9 +8,9 @@ const TOKIO_CENTER_LNG = 139.69171;
 const MAP_SIZE = 10;
 
 const map = L.map('map-canvas')
-// .on('load', () => {
-//   activeForm();
-// })
+  .on('load', () => {
+    activeForm();
+  })
   .setView({
     lat: TOKIO_CENTER_LAT,
     lng: TOKIO_CENTER_LNG,

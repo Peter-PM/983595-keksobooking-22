@@ -1,4 +1,3 @@
-
 const END_POINT = 'https://22.javascript.pages.academy/keksobooking';
 const Method = {
   GET: 'GET',
@@ -15,7 +14,7 @@ const load = ({url, method = Method.GET, headers = new Headers(), body = null })
       if (response.ok) {
         return response.json();
       }
-      throw new Error(`${response.status}: ${response.statusText}`);
+      throw new Error('`${response.status}: ${response.statusText}`');
     });
 }
 
@@ -26,8 +25,8 @@ const getData = (onSuccess, onError) => {
 }
 
 
-const postData = (onSuccess, onError, form) => {
-  return load({url: '', method: Method.POST, body: new FormData(form)})
+const postData = (onSuccess, onError, data) => {
+  return load({url: '', method: Method.POST, body: data})
     .then(onSuccess)
     .catch(onError)
 };

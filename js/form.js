@@ -1,6 +1,8 @@
 import { resetMainMarker } from './map.js';
 import { postData } from './api.js';
-import { showPopupError, showPopupSuccess } from './popup.js';
+import { onPopupErrorShow, onPopupSuccessShow } from './popup.js';
+
+const mainForm = document.querySelector('.ad-form');
 
 const typeHousing = document.querySelector('#type');
 const priceHousing = document.querySelector('#price');
@@ -19,6 +21,7 @@ priceHousing.placeholder = housingPrice[typeHousing.value];
 
 typeHousing.addEventListener('change', () => {
   let type = typeHousing.value;
+  priceHousing.placeholder = housingPrice[type];
   priceHousing.min = housingPrice[type];
 })
 
@@ -32,39 +35,14 @@ timeOut.addEventListener('change', () => {
   timeIn.value = type;
 })
 
-//Активация и деактивация формы
-const mapFiltersForm = document.querySelector('.map__filters');
-const mainForm = document.querySelector('.ad-form');
-const selects = mapFiltersForm.querySelectorAll('select');
-const fieldsets = document.querySelectorAll('fieldset');
-
-mapFiltersForm.classList.add('ad-form--disabled');
-mainForm.classList.add('ad-form--disabled');
-
-const addDisabled = (element) => {
-  element.disabled = true;
-};
-
-const removeDisabled = (element) => {
-  element.disabled = false;
-};
-
-selects.forEach(addDisabled);
-fieldsets.forEach(addDisabled);
-
-const activeForm = () => {
-  mapFiltersForm.classList.remove('ad-form--disabled');
-  mainForm.classList.remove('ad-form--disabled');
-  selects.forEach(removeDisabled);
-  fieldsets.forEach(removeDisabled);
-}
-activeForm();
-
 //Отправка данных
 mainForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
 
-  postData(showPopupSuccess, showPopupError, mainForm)
+  postData(onPopupSuccessShow, onPopupErrorShow, new FormData(evt.target));
+
+  mainForm.reset();
+  resetMainMarker();
 });
 
 mainForm.querySelector('.ad-form__reset').addEventListener('click', (evt) => {
@@ -73,6 +51,4 @@ mainForm.querySelector('.ad-form__reset').addEventListener('click', (evt) => {
   resetMainMarker();
 });
 
-export {activeForm, mainForm};
-
-
+export {mainForm};
