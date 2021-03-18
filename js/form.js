@@ -2,13 +2,87 @@ import { resetMainMarker } from './map.js';
 import { postData } from './api.js';
 import { onPopupErrorShow, onPopupSuccessShow } from './popup.js';
 
+
+const MIN_NAME_LENGTH = 30;
+const MAX_NAME_LENGTH = 100;
+
 const mainForm = document.querySelector('.ad-form');
 
-const typeHousing = document.querySelector('#type');
-const priceHousing = document.querySelector('#price');
+const typeHousing = mainForm.querySelector('#type');
+const priceHousing = mainForm.querySelector('#price');
 
-const timeIn = document.querySelector('#timein');
-const timeOut = document.querySelector('#timeout');
+const timeIn = mainForm.querySelector('#timein');
+const timeOut = mainForm.querySelector('#timeout');
+
+const roomNumber = mainForm.querySelector('#room_number');
+const guestNumber = mainForm.querySelector('#capacity');
+const guestNumberOptions = Array.from(guestNumber.options);
+
+const titleInput = document.querySelector('#title');
+const priseInput = document.querySelector('#price');
+
+const guestNumberKeys = {
+  1 : ['1'],
+  2 : ['1', '2'],
+  3 : ['1', '2', '3'],
+  100 : ['0'],
+}
+
+
+const disabledGuestOption = () => {
+  guestNumberOptions.forEach((option) => {
+    option.disabled = !guestNumberKeys[roomNumber.value].includes(option.value);
+    option.selected = !option.disabled;
+  })
+}
+disabledGuestOption();
+
+roomNumber.addEventListener('change', () => {
+  disabledGuestOption();
+})
+
+const checkTitleInputValidity = () => {
+  const valueLength = titleInput.value.length;
+  if (titleInput.validity.tooShort) {
+    titleInput.setCustomValidity('Ещё ' + (MIN_NAME_LENGTH - valueLength) +' симв., бро!');
+  } else if (titleInput.validity.tooLong) {
+    titleInput.setCustomValidity('Удали лишние ' + (valueLength - MAX_NAME_LENGTH) +' симв., бро!');
+  } else if (titleInput.validity.valueMissing) {
+    titleInput.setCustomValidity('Обязательное поле, бро!');
+  } else {
+    titleInput.setCustomValidity('');
+  }
+}
+titleInput.addEventListener('invalid', () => {
+  checkTitleInputValidity();
+});
+
+titleInput.addEventListener('input', () => {
+  checkTitleInputValidity();
+  titleInput.reportValidity();
+});
+
+const checkPriseInputValidity = () => {
+  if (priseInput.validity.valueMissing) {
+    priseInput.setCustomValidity('Обязательное поле, бро!');
+  } else if (priseInput.validity.rangeUnderflow) {
+    priseInput.setCustomValidity('Нужно больше золота! (' + priseInput.min + ')');
+  } else if (priseInput.validity.rangeOverflow) {
+    priseInput.setCustomValidity('Ну это тумач!');
+  } else {
+    priseInput.setCustomValidity('');
+  }
+}
+
+priseInput.addEventListener('invalid', () => {
+  checkPriseInputValidity();
+});
+
+priseInput.addEventListener('input', () => {
+  checkPriseInputValidity();
+  priseInput.reportValidity();
+});
+
 
 const housingPrice = {
   bungalow: 0,
@@ -17,7 +91,7 @@ const housingPrice = {
   palace: 10000,
 }
 
-priceHousing.placeholder = housingPrice[typeHousing.value];
+//priceHousing.placeholder = housingPrice[typeHousing.value];
 
 typeHousing.addEventListener('change', () => {
   let type = typeHousing.value;
@@ -36,13 +110,15 @@ timeOut.addEventListener('change', () => {
 })
 
 //Отправка данных
-mainForm.addEventListener('submit', (evt) => {
-  evt.preventDefault();
-
-  postData(onPopupSuccessShow, onPopupErrorShow, new FormData(evt.target));
-
+const sendSuccess = () => {
+  onPopupSuccessShow();
   mainForm.reset();
   resetMainMarker();
+};
+
+mainForm.addEventListener('submit', (evt) => {
+  evt.preventDefault();
+  postData(sendSuccess, onPopupErrorShow, new FormData(evt.target));
 });
 
 mainForm.querySelector('.ad-form__reset').addEventListener('click', (evt) => {
