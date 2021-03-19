@@ -1,6 +1,6 @@
 import { getData } from './api.js';
-import { fillingPopupMarkers } from './map.js';
+import { filtringTypeHousing } from './map-filters.js';
 import { showMapErrorPopup } from './popup.js';
 
 
-getData(fillingPopupMarkers, showMapErrorPopup);
+getData(filtringTypeHousing, showMapErrorPopup);
