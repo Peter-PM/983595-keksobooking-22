@@ -1,3 +1,5 @@
+/* global _:readonly */
+
 import { fillingPopupMarkers } from './map.js';
 
 const mapFilterForm = document.querySelector('.map__filters')
@@ -57,15 +59,15 @@ const checkFeatures = (item) => {
 const checkAllFilters = (item) => {
   return checkType(item) && checkRooms(item) && checkGuests(item) && checkPrice(item) && checkFeatures(item)
 }
-
+const RERENDER_TIMEOUT = 500;
 const filtringTypeHousing = (hotels) => {
   fillingPopupMarkers(hotels);
-  //console.log(hotels);
 
-  mapFilterForm.addEventListener('change', () => {
-    fillingPopupMarkers(hotels.filter(checkAllFilters));
-  });
-};
+  mapFilterForm.addEventListener('change', (_.debounce(() => {
+    fillingPopupMarkers(hotels.filter(checkAllFilters))
+  }, RERENDER_TIMEOUT)
+  ))
+}
 
 
 export {filtringTypeHousing}
