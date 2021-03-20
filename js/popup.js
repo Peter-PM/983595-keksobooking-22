@@ -36,8 +36,6 @@ const onPopupSuccessShow = () => {
   document.addEventListener('keydown', onPopupSuccessEsc);
   successMessage.addEventListener('click', onPopupSuccessClick);
   main.appendChild(successMessage);
-  // mainForm.reset();
-  // resetMainMarker();
 }
 //Обработка ESC на попапе успешной отправки формы
 const onPopupSuccessEsc = (evt) => {
