@@ -15,6 +15,8 @@ const DOTS_AFTER_ZERO = 5;
 
 const address = document.querySelector('#address');
 
+const markerGroup = L.layerGroup();
+
 const map = L.map('map-canvas')
   .on('load', () => {
     activeForm();
@@ -31,8 +33,6 @@ L.tileLayer(
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
 ).addTo(map);
-
-
 
 const mainPinIcon = L.icon({
   iconUrl: '/img/main-pin.svg',
@@ -58,8 +58,6 @@ const mainMarker = L.marker(
 );
 
 const locationPoint = mainMarker.getLatLng();
-
-const markerGroup = L.layerGroup();
 
 const fillingPopupMarkers = (allOffers) => {
   markerGroup.clearLayers();

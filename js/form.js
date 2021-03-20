@@ -28,6 +28,12 @@ const guestNumberKeys = {
   100 : ['0'],
 }
 
+const housingPrice = {
+  bungalow: 0,
+  flat: 1000,
+  house: 5000,
+  palace: 10000,
+}
 
 const disabledGuestOption = () => {
   guestNumberOptions.forEach((option) => {
@@ -82,16 +88,6 @@ priseInput.addEventListener('input', () => {
   checkPriseInputValidity();
   priseInput.reportValidity();
 });
-
-
-const housingPrice = {
-  bungalow: 0,
-  flat: 1000,
-  house: 5000,
-  palace: 10000,
-}
-
-//priceHousing.placeholder = housingPrice[typeHousing.value];
 
 typeHousing.addEventListener('change', () => {
   let type = typeHousing.value;

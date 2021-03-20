@@ -2,45 +2,34 @@
 
 import { fillingPopupMarkers } from './map.js';
 
+const MIN_PRICE = 10000;
+const MAX_PRICE = 50000;
+const RERENDER_TIMEOUT = 500;
+
 const mapFilterForm = document.querySelector('.map__filters')
 const housingType = mapFilterForm.querySelector('#housing-type');
 const housingPrice = mapFilterForm.querySelector('#housing-price');
 const housingRooms = mapFilterForm.querySelector('#housing-rooms');
 const housingGuests = mapFilterForm.querySelector('#housing-guests');
 
-const checkType = (item) => {
-  if (housingType.value === 'any') {
+const checkType = (item, ending, element) => {
+  if (element.value === 'any') {
     return true
   }
-  return item.offer.type === housingType.value;
-};
-
-const checkPrice = (item) => {
-  if (housingPrice.value === 'any') {
-    return true
-  }
-  if (item.offer.price < 10000) {
-    return housingPrice.value == 'low'
-  }
-  if (item.offer.price > 50000) {
-    return housingPrice.value == 'high'
-  }
-  return housingPrice.value == 'middle';
+  return item.offer[ending].toString() === element.value;
 }
 
-const checkRooms = (item) => {
-  if (housingRooms.value === 'any') {
-    return true
+const checkPrice = (item) => {
+  switch (housingPrice.value) {
+    case 'any':
+      return true
+    case 'low':
+      return item.offer.price < MIN_PRICE
+    case 'high':
+      return item.offer.price > MAX_PRICE
   }
-  return item.offer.rooms == housingRooms.value;
-};
-
-const checkGuests = (item) => {
-  if (housingGuests.value === 'any') {
-    return true
-  }
-  return item.offer.guests == housingGuests.value;
-};
+  return item.offer.price <= MAX_PRICE && item.offer.price >= MIN_PRICE;
+}
 
 const checkFeatures = (item) => {
   const checkboxs = mapFilterForm.querySelectorAll('input[type="checkbox"]:checked');
@@ -57,9 +46,13 @@ const checkFeatures = (item) => {
 }
 
 const checkAllFilters = (item) => {
-  return checkType(item) && checkRooms(item) && checkGuests(item) && checkPrice(item) && checkFeatures(item)
+  return checkType(item, 'type', housingType)
+  && checkType(item, 'rooms', housingRooms)
+  && checkType(item, 'guests', housingGuests)
+  && checkPrice(item)
+  && checkFeatures(item)
 }
-const RERENDER_TIMEOUT = 500;
+
 const filtringTypeHousing = (hotels) => {
   fillingPopupMarkers(hotels);
 
