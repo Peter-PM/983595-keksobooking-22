@@ -43,12 +43,15 @@ const checkGuests = (item) => {
 const checkFeatures = (item) => {
   const checkboxs = mapFilterForm.querySelectorAll('input[type="checkbox"]:checked');
   const itemFeatures = item.offer.features;
-  checkboxs.forEach((option) => {
-    if (itemFeatures.includes(option.value)) {
-      return true
+  if (!checkboxs.length) {
+    return true
+  }
+  for (let chek of checkboxs) {
+    if (!itemFeatures.includes(chek.value)) {
+      return false
     }
-    //console.log(itemFeatures.includes(option.value))
-  })
+  }
+  return true
 }
 
 const checkAllFilters = (item) => {
