@@ -1,10 +1,11 @@
 /* global _:readonly */
 
-import { fillingPopupMarkers } from './map.js';
+import { fillingPopupMarkers, clearMarkerGroup } from './map.js';
 
 const MIN_PRICE = 10000;
 const MAX_PRICE = 50000;
 const RERENDER_TIMEOUT = 500;
+const DEFAULT_FILTER_VALUE = 'any';
 
 const mapFilterForm = document.querySelector('.map__filters')
 const housingType = mapFilterForm.querySelector('#housing-type');
@@ -13,22 +14,22 @@ const housingRooms = mapFilterForm.querySelector('#housing-rooms');
 const housingGuests = mapFilterForm.querySelector('#housing-guests');
 
 const checkType = (item, ending, element) => {
-  if (element.value === 'any') {
+  if (element.value === DEFAULT_FILTER_VALUE) {
     return true
   }
-  return item.offer[ending].toString() === element.value;
+  return item.offer[ending].toString() === (element.value  || DEFAULT_FILTER_VALUE);
 }
 
 const checkPrice = (item) => {
   switch (housingPrice.value) {
-    case 'any':
-      return true
+    case 'middle':
+      return item.offer.price <= MAX_PRICE && item.offer.price >= MIN_PRICE
     case 'low':
       return item.offer.price < MIN_PRICE
     case 'high':
       return item.offer.price > MAX_PRICE
   }
-  return item.offer.price <= MAX_PRICE && item.offer.price >= MIN_PRICE;
+  return true;
 }
 
 const checkFeatures = (item) => {
@@ -57,6 +58,7 @@ const filtringTypeHousing = (hotels) => {
   fillingPopupMarkers(hotels);
 
   mapFilterForm.addEventListener('change', (_.debounce(() => {
+    clearMarkerGroup();
     fillingPopupMarkers(hotels.filter(checkAllFilters))
   }, RERENDER_TIMEOUT)
   ))
