@@ -105,4 +105,10 @@ const resetMainMarker = () => {
   address.value = `${TOKIO_CENTER_LAT}, ${TOKIO_CENTER_LNG}`
 };
 
-export {fillingPopupMarkers, resetMainMarker};
+
+const clearMarkerGroup = () => {
+  markerGroup.clearLayers();
+}
+
+
+export {fillingPopupMarkers, resetMainMarker, clearMarkerGroup};
