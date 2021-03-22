@@ -24,7 +24,6 @@ const getData = (onSuccess, onError) => {
     .catch(onError)
 }
 
-
 const postData = (onSuccess, onError, data) => {
   return load({url: '', method: Method.POST, body: data})
     .then(onSuccess)

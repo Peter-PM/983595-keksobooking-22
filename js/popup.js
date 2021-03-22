@@ -1,5 +1,3 @@
-// import { resetMainMarker } from './map.js';
-// import { mainForm } from './form.js';
 import { isEscEvent } from './util.js';
 
 
@@ -7,11 +5,6 @@ import { isEscEvent } from './util.js';
 const main = document.querySelector('main');
 const successMessage = document.querySelector('#success').content.querySelector('.success');
 const errorMessage = document.querySelector('#error').content.querySelector('.error');
-
-//const errorButton = errorMessage.querySelector('button');
-// errorButton.addEventListener('click', () => {
-//   main.removeChild(errorMessage);
-// });
 
 const closePopup = (message, escFoo) => {
   message.remove();
@@ -43,8 +36,6 @@ const onPopupSuccessShow = () => {
   document.addEventListener('keydown', onPopupSuccessEsc);
   successMessage.addEventListener('click', onPopupSuccessClick);
   main.appendChild(successMessage);
-  // mainForm.reset();
-  // resetMainMarker();
 }
 //Обработка ESC на попапе успешной отправки формы
 const onPopupSuccessEsc = (evt) => {

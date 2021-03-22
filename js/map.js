@@ -5,7 +5,17 @@ import { activeForm } from './form-activation.js';
 const L = window.L;
 const TOKIO_CENTER_LAT = 35.68950;
 const TOKIO_CENTER_LNG = 139.69171;
-const MAP_SIZE = 10;
+const MAP_SIZE = 9;
+const MARKERS_NUMBER = 10;
+const MAIN_ICON_SIZE = [52, 52];
+const MAIN_ICON_ANCHOR = [26, 52];
+const SECOND_ICON_SIZE = [40, 40];
+const SECOND_ICON_ANCHOR = [20, 40];
+const DOTS_AFTER_ZERO = 5;
+
+const address = document.querySelector('#address');
+
+const markerGroup = L.layerGroup();
 
 const map = L.map('map-canvas')
   .on('load', () => {
@@ -23,11 +33,6 @@ L.tileLayer(
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   },
 ).addTo(map);
-
-const MAIN_ICON_SIZE = [52, 52];
-const MAIN_ICON_ANCHOR = [26, 52];
-const SECOND_ICON_SIZE = [40, 40];
-const SECOND_ICON_ANCHOR = [20, 40];
 
 const mainPinIcon = L.icon({
   iconUrl: '/img/main-pin.svg',
@@ -52,27 +57,30 @@ const mainMarker = L.marker(
   },
 );
 
+const locationPoint = mainMarker.getLatLng();
+
 const fillingPopupMarkers = (allOffers) => {
-  for (let oneOffer of allOffers) {
-    const secondMarker = L.marker(
-      {
-        lat: oneOffer.location.lat,
-        lng: oneOffer.location.lng,
-      },
-      {
-        icon: secondPinIcon,
-      },
-    );
-    secondMarker.addTo(map).bindPopup(createCard(oneOffer));
-  }
+  markerGroup.clearLayers();
+  allOffers
+    .slice(0, MARKERS_NUMBER)
+    .forEach((oneOffer) => {
+      const secondMarker = L.marker(
+        {
+          lat: oneOffer.location.lat,
+          lng: oneOffer.location.lng,
+        },
+        {
+          icon: secondPinIcon,
+        },
+      );
+      secondMarker.bindPopup(createCard(oneOffer));
+      markerGroup.addLayer(secondMarker);
+    })
 };
 
+markerGroup.addTo(map)
 mainMarker.addTo(map);
 
-const locationPoint = mainMarker.getLatLng();
-const DOTS_AFTER_ZERO = 5;
-
-const address = document.querySelector('#address');
 address.value = `${locationPoint.lat}, ${locationPoint.lng}`
 
 mainMarker.on('move', (evt) => {
@@ -80,7 +88,6 @@ mainMarker.on('move', (evt) => {
 
   address.value = `${targetLatLng.lat.toFixed(DOTS_AFTER_ZERO)}, ${targetLatLng.lng.toFixed(DOTS_AFTER_ZERO)}`;
 });
-//mainMarker.remove();
 
 const resetMainMarker = () => {
   map.setView(
