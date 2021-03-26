@@ -1,6 +1,7 @@
 import { resetMainMarker } from './map.js';
 import { postData } from './api.js';
 import { onPopupErrorShow, onPopupSuccessShow } from './popup.js';
+import { resetFilter } from './map-filters.js';
 
 
 const MIN_NAME_LENGTH = 30;
@@ -109,6 +110,7 @@ timeOut.addEventListener('change', () => {
 const sendSuccess = () => {
   onPopupSuccessShow();
   mainForm.reset();
+  resetFilter();
   resetMainMarker();
 };
 
