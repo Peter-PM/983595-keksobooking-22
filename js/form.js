@@ -1,6 +1,7 @@
 import { resetMainMarker } from './map.js';
 import { postData } from './api.js';
 import { onPopupErrorShow, onPopupSuccessShow } from './popup.js';
+import { resetFilter } from './map-filters.js';
 
 
 const MIN_NAME_LENGTH = 30;
@@ -21,14 +22,14 @@ const guestNumberOptions = Array.from(guestNumber.options);
 const titleInput = document.querySelector('#title');
 const priseInput = document.querySelector('#price');
 
-const guestNumberKeys = {
+const roomsToGuestsNumber = {
   1 : ['1'],
   2 : ['1', '2'],
   3 : ['1', '2', '3'],
   100 : ['0'],
 }
 
-const housingPrice = {
+const housingToPrice = {
   bungalow: 0,
   flat: 1000,
   house: 5000,
@@ -37,7 +38,7 @@ const housingPrice = {
 
 const disabledGuestOption = () => {
   guestNumberOptions.forEach((option) => {
-    option.disabled = !guestNumberKeys[roomNumber.value].includes(option.value);
+    option.disabled = !roomsToGuestsNumber[roomNumber.value].includes(option.value);
     option.selected = !option.disabled;
   })
 }
@@ -59,6 +60,7 @@ const checkTitleInputValidity = () => {
     titleInput.setCustomValidity('');
   }
 }
+
 titleInput.addEventListener('invalid', () => {
   checkTitleInputValidity();
 });
@@ -91,8 +93,8 @@ priseInput.addEventListener('input', () => {
 
 typeHousing.addEventListener('change', () => {
   let type = typeHousing.value;
-  priceHousing.placeholder = housingPrice[type];
-  priceHousing.min = housingPrice[type];
+  priceHousing.placeholder = housingToPrice[type];
+  priceHousing.min = housingToPrice[type];
 })
 
 timeIn.addEventListener('change', () => {
@@ -109,6 +111,7 @@ timeOut.addEventListener('change', () => {
 const sendSuccess = () => {
   onPopupSuccessShow();
   mainForm.reset();
+  resetFilter();
   resetMainMarker();
 };
 

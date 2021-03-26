@@ -15,7 +15,7 @@ const showAvatar = (evt, preview) => {
   preview.src = evt.target.result;
 }
 
-const showPhoto = (evt, preview) => {
+const showHousePhoto = (evt, preview) => {
   const photosItem = document.createElement('img');
   photosItem.className = 'popup__photo';
   photosItem.width = '70';
@@ -46,5 +46,5 @@ const showUserPhotos = (input, preview, funct) => {
 }
 
 showUserPhotos(avatarInput, avatarPreview, showAvatar)
-showUserPhotos(housingInput, housingPreview, showPhoto)
+showUserPhotos(housingInput, housingPreview, showHousePhoto)
 

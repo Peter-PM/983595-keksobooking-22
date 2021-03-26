@@ -1,5 +1,5 @@
 import { createCard } from './card.js';
-import { activeForm } from './form-activation.js';
+import { activateForm } from './form-activation.js';
 
 
 const L = window.L;
@@ -19,7 +19,7 @@ const markerGroup = L.layerGroup();
 
 const map = L.map('map-canvas')
   .on('load', () => {
-    activeForm();
+    activateForm();
   })
   .setView({
     lat: TOKIO_CENTER_LAT,
