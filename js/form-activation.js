@@ -18,11 +18,11 @@ const removeDisabled = (element) => {
 selects.forEach(addDisabled);
 fieldsets.forEach(addDisabled);
 
-const activeForm = () => {
+const activateForm = () => {
   mapFiltersForm.classList.remove('ad-form--disabled');
   mainForm.classList.remove('ad-form--disabled');
   selects.forEach(removeDisabled);
   fieldsets.forEach(removeDisabled);
 }
 
-export {activeForm};
+export {activateForm};

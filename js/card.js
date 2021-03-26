@@ -22,7 +22,7 @@ const createFhotos = (list, photos) => {
   }
 };
 
-const roomsDeclinations = (rooms) => {
+const addRoomsDeclinations = (rooms) => {
 
   if (rooms == 1) {
     rooms += ' комната'
@@ -37,7 +37,7 @@ const roomsDeclinations = (rooms) => {
   return rooms
 };
 
-const guestsDeclinations = (guests) => {
+const addGuestsDeclinations = (guests) => {
 
   if (guests == 1) {
     guests += ' гостя'
@@ -75,7 +75,7 @@ const createCard = (item) => {
   popupAdress.textContent = item.offer.address;
   popupPrice.textContent = item.offer.price + ' ₽/ночь';
   popupType.textContent = housingType[item.offer.type];
-  popupCapacity.textContent = `${roomsDeclinations(item.offer.rooms)} для ${guestsDeclinations(item.offer.guests)}`;
+  popupCapacity.textContent = `${addRoomsDeclinations(item.offer.rooms)} для ${addGuestsDeclinations(item.offer.guests)}`;
   popupTime.textContent = `Заезд после ${item.offer.checkin} выезд до ${item.offer.checkout}`;
   popupDescription.textContent = item.offer.description;
   createFeatures(popupFeatures, item.offer.features);
