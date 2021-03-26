@@ -24,7 +24,7 @@ const createFhotos = (list, photos) => {
 
 const addRoomsDeclinations = (rooms) => {
 
-  if (rooms == 1) {
+  if (rooms === 1) {
     rooms += ' комната'
   }
   if (rooms > 1 && rooms < 5) {
@@ -39,7 +39,7 @@ const addRoomsDeclinations = (rooms) => {
 
 const addGuestsDeclinations = (guests) => {
 
-  if (guests == 1) {
+  if (guests === 1) {
     guests += ' гостя'
   } else {
     guests += ' гостей'
