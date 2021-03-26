@@ -1,11 +1,12 @@
-import { mainForm } from './form.js';
-
+const AVATAR_SRC = document.querySelector('.ad-form-header__preview').querySelector('img').src;
 const FILES_TYPE = ['gif', 'jpg', 'jpeg', 'png'];
 
+const mainForm = document.querySelector('.ad-form');
 const avatarInput = mainForm.querySelector('#avatar');
 const avatarPreview = mainForm.querySelector('.ad-form-header__preview').querySelector('img');
 const housingInput = mainForm.querySelector('#images');
 const housingPreview = mainForm.querySelector('.ad-form__photo');
+
 
 housingPreview.style.width = 'auto';
 housingPreview.style.minWidth = '70px';
@@ -45,6 +46,15 @@ const showUserPhotos = (input, preview, funct) => {
   });
 }
 
+const removeAvatar = () => {
+  avatarPreview.src = AVATAR_SRC;
+}
+
+const removeHousePhoto = () => {
+  housingPreview.innerHTML = '';
+}
+
 showUserPhotos(avatarInput, avatarPreview, showAvatar)
 showUserPhotos(housingInput, housingPreview, showHousePhoto)
 
+export {removeAvatar, removeHousePhoto}

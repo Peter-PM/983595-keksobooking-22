@@ -1,7 +1,8 @@
 import { resetMainMarker } from './map.js';
 import { postData } from './api.js';
-import { onPopupErrorShow, onPopupSuccessShow } from './popup.js';
+import { showPopupError, showPopupSuccess } from './popup.js';
 import { resetFilter } from './map-filters.js';
+import { removeAvatar, removeHousePhoto } from './photo.js';
 
 
 const MIN_NAME_LENGTH = 30;
@@ -107,23 +108,27 @@ timeOut.addEventListener('change', () => {
   timeIn.value = type;
 })
 
-//Отправка данных
-const sendSuccess = () => {
-  onPopupSuccessShow();
+const resetAll = () => {
   mainForm.reset();
   resetFilter();
   resetMainMarker();
+  removeAvatar();
+  removeHousePhoto();
+}
+//Отправка данных
+const sendSuccess = () => {
+  showPopupSuccess();
+  resetAll();
 };
 
 mainForm.addEventListener('submit', (evt) => {
   evt.preventDefault();
-  postData(sendSuccess, onPopupErrorShow, new FormData(evt.target));
+  postData(sendSuccess, showPopupError, new FormData(evt.target));
 });
 
 mainForm.querySelector('.ad-form__reset').addEventListener('click', (evt) => {
   evt.preventDefault();
-  mainForm.reset();
-  resetMainMarker();
+  resetAll();
 });
 
 export {mainForm};

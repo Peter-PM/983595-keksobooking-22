@@ -1,3 +1,10 @@
+const Consts = {
+  ZERO: 0,
+  ONE: 1,
+  FIVE: 5,
+  TWENTY: 20,
+}
+
 const element = document.querySelector('#card').content.querySelector('.popup');
 
 const createFeatures = (list, features) => {
@@ -24,13 +31,13 @@ const createFhotos = (list, photos) => {
 
 const addRoomsDeclinations = (rooms) => {
 
-  if (rooms === 1) {
+  if (rooms === Consts.ONE) {
     rooms += ' комната'
   }
-  if (rooms > 1 && rooms < 5) {
+  if (rooms > Consts.ONE && rooms < Consts.FIVE) {
     rooms += ' комнаты'
   }
-  if (rooms >= 5 && rooms < 20) {
+  if (rooms >= Consts.FIVE && rooms <= Consts.TWENTY) {
     rooms += ' комнат'
   }
 
@@ -39,7 +46,7 @@ const addRoomsDeclinations = (rooms) => {
 
 const addGuestsDeclinations = (guests) => {
 
-  if (guests === 1) {
+  if (guests === Consts.ONE) {
     guests += ' гостя'
   } else {
     guests += ' гостей'
@@ -75,7 +82,10 @@ const createCard = (item) => {
   popupAdress.textContent = item.offer.address;
   popupPrice.textContent = item.offer.price + ' ₽/ночь';
   popupType.textContent = housingType[item.offer.type];
-  popupCapacity.textContent = `${addRoomsDeclinations(item.offer.rooms)} для ${addGuestsDeclinations(item.offer.guests)}`;
+  item.offer.rooms || item.offer.guests ? popupCapacity.textContent = `${addRoomsDeclinations(item.offer.rooms)} для ${addGuestsDeclinations(item.offer.guests)}` : popupCapacity.remove()
+  // if (!+item.offer.rooms || !+item.offer.guests) {
+  //   popupCapacity.remove()
+  // } else {popupCapacity.textContent = `${addRoomsDeclinations(item.offer.rooms)} для ${addGuestsDeclinations(item.offer.guests)}`}
   popupTime.textContent = `Заезд после ${item.offer.checkin} выезд до ${item.offer.checkout}`;
   popupDescription.textContent = item.offer.description;
   createFeatures(popupFeatures, item.offer.features);

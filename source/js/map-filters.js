@@ -33,17 +33,11 @@ const checkPrice = (item) => {
 }
 
 const checkFeatures = (item) => {
-  const checkboxs = mapFilterForm.querySelectorAll('input[type="checkbox"]:checked');
-  const itemFeatures = item.offer.features;
+  const checkboxs = Array.from(mapFilterForm.querySelectorAll('input[type="checkbox"]:checked'));
   if (!checkboxs.length) {
     return true
   }
-  for (let chek of checkboxs) {
-    if (!itemFeatures.includes(chek.value)) {
-      return false
-    }
-  }
-  return true
+  return checkboxs.every((el) => item.offer.features.includes(el.value))
 }
 
 const checkAllFilters = (item) => {

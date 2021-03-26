@@ -81,12 +81,16 @@ const fillingPopupMarkers = (allOffers) => {
 markerGroup.addTo(map)
 mainMarker.addTo(map);
 
-address.value = `${locationPoint.lat}, ${locationPoint.lng}`
+const setAdress = (lat, lng) => {
+  address.value = `${lat}, ${lng}`
+}
+
+setAdress(locationPoint.lat, locationPoint.lng);
 
 mainMarker.on('move', (evt) => {
   const targetLatLng = evt.target.getLatLng();
 
-  address.value = `${targetLatLng.lat.toFixed(DOTS_AFTER_ZERO)}, ${targetLatLng.lng.toFixed(DOTS_AFTER_ZERO)}`;
+  setAdress(targetLatLng.lat.toFixed(DOTS_AFTER_ZERO), targetLatLng.lng.toFixed(DOTS_AFTER_ZERO))
 });
 
 const resetMainMarker = () => {
@@ -102,7 +106,7 @@ const resetMainMarker = () => {
       lng: TOKIO_CENTER_LNG,
     },
   );
-  address.value = `${TOKIO_CENTER_LAT}, ${TOKIO_CENTER_LNG}`
+  setAdress(TOKIO_CENTER_LAT, TOKIO_CENTER_LNG)
 };
 
 

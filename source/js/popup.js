@@ -12,7 +12,7 @@ const closePopup = (message, escFoo) => {
 }
 
 //Создание попапа ошибки формы
-const onPopupErrorShow = () => {
+const showPopupError = () => {
   document.addEventListener('keydown', onPopupErrorEsc);
   errorMessage.querySelector('.error__message').textContent = 'Ошибка размещения объявления';
   errorMessage.addEventListener('click', onPopupErrorClick);
@@ -32,7 +32,7 @@ const onPopupErrorClick = () => {
 }
 
 //Создание попапа успешной отправки формы
-const onPopupSuccessShow = () => {
+const showPopupSuccess = () => {
   document.addEventListener('keydown', onPopupSuccessEsc);
   successMessage.addEventListener('click', onPopupSuccessClick);
   main.appendChild(successMessage);
@@ -52,8 +52,8 @@ const onPopupSuccessClick = () => {
 
 //Ошибка загрузки карты
 const showMapErrorPopup = () => {
-  onPopupErrorShow();
+  showPopupError();
   errorMessage.querySelector('.error__message').textContent = 'Объявления не загрузились';
 }
 
-export {onPopupErrorShow, onPopupSuccessShow, showMapErrorPopup};
+export {showPopupError, showPopupSuccess, showMapErrorPopup};
