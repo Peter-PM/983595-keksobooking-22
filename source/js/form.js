@@ -4,7 +4,6 @@ import { showPopupError, showPopupSuccess } from './popup.js';
 import { resetFilter } from './map-filters.js';
 import { removeAvatar, removeHousePhoto } from './photo.js';
 
-
 const MIN_NAME_LENGTH = 30;
 const MAX_NAME_LENGTH = 100;
 
@@ -99,13 +98,11 @@ typeHousing.addEventListener('change', () => {
 })
 
 timeIn.addEventListener('change', () => {
-  let type = timeIn.value;
-  timeOut.value = type;
+  timeOut.value = timeIn.value;
 })
 
 timeOut.addEventListener('change', () => {
-  let type = timeOut.value;
-  timeIn.value = type;
+  timeIn.value = timeOut.value;
 })
 
 const resetAll = () => {

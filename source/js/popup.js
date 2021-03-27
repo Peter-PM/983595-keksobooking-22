@@ -1,6 +1,5 @@
 import { isEscEvent } from './util.js';
 
-
 //Отправка данных
 const main = document.querySelector('main');
 const successMessage = document.querySelector('#success').content.querySelector('.success');

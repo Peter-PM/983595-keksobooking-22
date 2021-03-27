@@ -9,4 +9,3 @@ const isEscEvent = (evt) => {
 };
 
 export {isEscEvent};
-

@@ -82,7 +82,7 @@ markerGroup.addTo(map)
 mainMarker.addTo(map);
 
 const setAdress = (lat, lng) => {
-  address.value = `${lat}, ${lng}`
+  address.value = `${lat.toFixed(DOTS_AFTER_ZERO)}, ${lng.toFixed(DOTS_AFTER_ZERO)}`
 }
 
 setAdress(locationPoint.lat, locationPoint.lng);
@@ -90,7 +90,7 @@ setAdress(locationPoint.lat, locationPoint.lng);
 mainMarker.on('move', (evt) => {
   const targetLatLng = evt.target.getLatLng();
 
-  setAdress(targetLatLng.lat.toFixed(DOTS_AFTER_ZERO), targetLatLng.lng.toFixed(DOTS_AFTER_ZERO))
+  setAdress(targetLatLng.lat, targetLatLng.lng)
 });
 
 const resetMainMarker = () => {

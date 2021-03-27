@@ -16,7 +16,7 @@ const createFeatures = (list, features) => {
   }
 };
 
-const createFhotos = (list, photos) => {
+const createPhotos = (list, photos) => {
   list.innerHTML = '';
   for (let i = 0; i < photos.length; i++) {
     const photosItem = document.createElement('img');
@@ -67,7 +67,7 @@ const createCard = (item) => {
   const cloneTemplate = element.cloneNode(true);
   const popupAvatar = cloneTemplate.querySelector('.popup__avatar');
   const popupTitle = cloneTemplate.querySelector('.popup__title');
-  const popupAdress = cloneTemplate.querySelector('.popup__text--address');
+  const popupAddress = cloneTemplate.querySelector('.popup__text--address');
   const popupPrice = cloneTemplate.querySelector('.popup__text--price');
   const popupType = cloneTemplate.querySelector('.popup__type');
   const popupCapacity = cloneTemplate.querySelector('.popup__text--capacity');
@@ -76,20 +76,16 @@ const createCard = (item) => {
   const popupFeatures = cloneTemplate.querySelector('.popup__features');
   const popupPhotos = cloneTemplate.querySelector('.popup__photos');
 
-
-  popupAvatar.src = item.author.avatar;
-  popupTitle.textContent = item.offer.title;
-  popupAdress.textContent = item.offer.address;
-  popupPrice.textContent = item.offer.price + ' ₽/ночь';
-  popupType.textContent = housingType[item.offer.type];
-  item.offer.rooms || item.offer.guests ? popupCapacity.textContent = `${addRoomsDeclinations(item.offer.rooms)} для ${addGuestsDeclinations(item.offer.guests)}` : popupCapacity.remove()
-  // if (!+item.offer.rooms || !+item.offer.guests) {
-  //   popupCapacity.remove()
-  // } else {popupCapacity.textContent = `${addRoomsDeclinations(item.offer.rooms)} для ${addGuestsDeclinations(item.offer.guests)}`}
-  popupTime.textContent = `Заезд после ${item.offer.checkin} выезд до ${item.offer.checkout}`;
-  popupDescription.textContent = item.offer.description;
-  createFeatures(popupFeatures, item.offer.features);
-  createFhotos(popupPhotos, item.offer.photos);
+  item.author.avatar ?  popupAvatar.src = item.author.avatar : popupAvatar.remove();
+  item.offer.title ? popupTitle.textContent = item.offer.title : popupTitle.remove();
+  item.offer.address ? popupAddress.textContent = item.offer.address : popupAddress.remove();
+  item.offer.price ? popupPrice.textContent = item.offer.price + ' ₽/ночь' : popupPrice.remove();
+  item.offer.type ? popupType.textContent = housingType[item.offer.type] : popupType.remove();
+  item.offer.rooms && item.offer.guests ? popupCapacity.textContent = `${addRoomsDeclinations(item.offer.rooms)} для ${addGuestsDeclinations(item.offer.guests)}` : popupCapacity.remove();
+  item.offer.checkin && item.offer.checkout ? popupTime.textContent = `Заезд после ${item.offer.checkin} выезд до ${item.offer.checkout}` : popupTime.remove();
+  item.offer.description ? popupDescription.textContent = item.offer.description : popupDescription.remove();
+  item.offer.features ? createFeatures(popupFeatures, item.offer.features) : popupFeatures.remove();
+  item.offer.photos ? createPhotos(popupPhotos, item.offer.photos) : popupPhotos.remove();
 
   return cloneTemplate
 

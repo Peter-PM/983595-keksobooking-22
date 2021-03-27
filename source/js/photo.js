@@ -19,7 +19,7 @@ const showAvatar = (evt, preview) => {
 const showHousePhoto = (evt, preview) => {
   const photosItem = document.createElement('img');
   photosItem.className = 'popup__photo';
-  photosItem.width = '70';
+  photosItem.width = 70;
   photosItem.alt = 'Фотография жилья';
   photosItem.src = evt.target.result;
   preview.appendChild(photosItem);
