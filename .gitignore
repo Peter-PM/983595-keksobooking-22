@@ -6,6 +6,7 @@
 *.psd
 *.sublime*
 node_modules/
+project-108299/
 npm-debug.log*
 Thumbs.db
 .vscode/

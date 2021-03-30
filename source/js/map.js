@@ -35,13 +35,13 @@ L.tileLayer(
 ).addTo(map);
 
 const mainPinIcon = L.icon({
-  iconUrl: '/img/main-pin.svg',
+  iconUrl: './img/main-pin.svg',
   iconSize: MAIN_ICON_SIZE,
   iconAnchor: MAIN_ICON_ANCHOR,
 });
 
 const secondPinIcon = L.icon({
-  iconUrl: '/img/pin.svg',
+  iconUrl: './img/pin.svg',
   iconSize: SECOND_ICON_SIZE,
   iconAnchor: SECOND_ICON_ANCHOR,
 });
